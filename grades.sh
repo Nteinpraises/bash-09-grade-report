@@ -24,6 +24,18 @@ while IFS=',' read -r name html css bash git || [[ -n "$name" ]]; do
     total=$(( html + css + bash + git ))
     avg=$(awk -v t="$total" 'BEGIN { print "%.2f", t / 4 }')
 
-    echo "$name totaal=$total avg=$avg"
+    if (( total>= 64 )); then
+        mention="Tres bien"
+    elif (( total>= 56 )); then
+        mention="Bien"
+    elif (( total>= 48 )); then
+        mention="Assez bien"
+    elif (( total>= 40 )); then
+        mention="Passable"
+    else 
+        mention="Echec"
+    fi
+    
+    echo "$name totaal=$total avg=$avg mention=$mention"
 
 done < "$file"
