@@ -21,5 +21,9 @@ while IFS=',' read -r name html css bash git || [[ -n "$name" ]]; do
         continue
     fi 
 
-    echo "$name"
+    total=$(( html + css + bash + git ))
+    avg=$(awk -v t="$total" 'BEGIN { print "%.2f", t / 4 }')
+
+    echo "$name totaal=$total avg=$avg"
+
 done < "$file"
